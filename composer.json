@@ -1,0 +1,28 @@
+{
+    "name": "gibboncms/blog",
+    "description": "Simple blogging system built on GibbonCms",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sebastian De Deyne",
+            "email": "sebastiandedeyne@gmail.com"
+        }
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "~4.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "GibbonCms\\Blog\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "GibbonCms\\Blog\\Tests\\": "tests/" 
+        }
+    },
+    "require": {
+        "gibboncms/gibbon": "dev-master",
+        "symfony/yaml": "~2.6"
+    }
+}
