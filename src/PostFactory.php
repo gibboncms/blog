@@ -2,6 +2,7 @@
 
 namespace GibbonCms\Blog;
 
+use GibbonCms\Blog\MarkdownConverter;
 use GibbonCms\Gibbon\Factory;
 use Symfony\Component\Yaml\Parser as Yaml;
 
@@ -12,9 +13,15 @@ class PostFactory extends Factory
      */
     protected $yaml;
 
+    /**
+     * @var \GibbonCms\Blog\MarkdownConverter
+     */
+    protected $markdownConverter;
+
     public function __construct()
     {
         $this->yaml = new Yaml;
+        $this->markdownConverter = new MarkdownConverter;
     }
 
     /**
@@ -34,11 +41,12 @@ class PostFactory extends Factory
         $meta = $this->yaml->parse($rawMeta);
 
         return $this->createAndFill([
-            'id'     => $data['id'],
-            'slug'   => $data['slug'],
-            'title'  => $meta['title'],
-            'author' => $meta['author'],
-            'body'   => $body,
+            'id'                => $data['id'],
+            'slug'              => $data['slug'],
+            'title'             => $meta['title'],
+            'author'            => $meta['author'],
+            'body'              => $body,
+            'markdownConverter' => $this->markdownConverter,
         ]);
     }
 

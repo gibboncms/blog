@@ -35,6 +35,7 @@ class PostFactoryTest extends TestCase
         $this->assertEquals('My First Post', $post->getTitle());
         $this->assertEquals('Sebastian De Deyne', $post->getAuthor());
         $this->assertRegexp('/## Hello world/', $post->getBody());
+        $this->assertRegexp('/<h2>Hello world<\/h2>/', $post->getHtmlBody());
     }
 
     /** @test */

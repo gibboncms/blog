@@ -2,6 +2,7 @@
 
 namespace GibbonCms\Blog;
 
+use GibbonCms\Blog\Interfaces\MarkdownConverter as MarkdownConverterInterface;
 use GibbonCms\Gibbon\Entity;
 
 class Post extends Entity
@@ -20,6 +21,11 @@ class Post extends Entity
      * @var string
      */
     protected $body;
+
+    /**
+     * @var \GibbonCms\Blog\Interfaces\MarkdownConverter|null
+     */
+    protected $markdownConverter;
 
     /**
      * @param string $title
@@ -76,6 +82,27 @@ class Post extends Entity
     public function getBody()
     {
         return $this->body;
+    }
+
+    /**
+     * @param \GibbonCms\Blog\Interfaces\MarkdownConverter $markdownConverter
+     * @return void
+     */
+    public function setMarkdownConverter(MarkdownConverterInterface $markdownConverter)
+    {
+        $this->markdownConverter = $markdownConverter;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHtmlBody()
+    {
+        if ($this->markdownConverter == null) {
+            throw new \Exception("No markdown converter assigned to this entity");
+        }
+
+        return $this->markdownConverter->convert($this->body);
     }
 
     /**
