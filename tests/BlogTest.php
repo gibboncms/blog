@@ -1,6 +1,4 @@
-<?php
-
-namespace GibbonCms\Blog\Tests;
+<?php namespace GibbonCms\Blog\Tests;
 
 use GibbonCms\Blog\Blog;
 use GibbonCms\Blog\Post;
@@ -22,6 +20,12 @@ class BlogTest extends TestCase
     /** @test */
     function it_gets_a_post()
     {
-        $this->assertInstanceOf(Post::class, $this->blog->getPost(1));
+        $this->assertInstanceOf(Post::class, $this->blog->find('my-first-post'));
+    }
+
+    /** @test */
+    function it_gets_all_posts()
+    {
+        $this->assertCount(1, $this->blog->getAll());
     }
 }

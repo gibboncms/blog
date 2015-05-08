@@ -1,10 +1,8 @@
-<?php
+<?php namespace GibbonCms\Blog;
 
-namespace GibbonCms\Blog;
-
-use GibbonCms\Gibbon\Cache;
-use GibbonCms\Gibbon\EntityRepository;
-use GibbonCms\Gibbon\Filesystem;
+use GibbonCms\Gibbon\Filesystems\FileCache;
+use GibbonCms\Gibbon\Filesystems\PlainFilesystem;
+use GibbonCms\Gibbon\Repositories\FileRepository;
 
 class Blog
 {
@@ -18,9 +16,9 @@ class Blog
      */
     public function __construct($directory)
     {
-        $this->repository = new EntityRepository(
-            new Filesystem($directory),
-            new Cache($directory . '/.cache'),
+        $this->repository = new FileRepository(
+            new PlainFilesystem($directory),
+            new FileCache($directory . '/.cache'),
             new PostFactory
         );
     }
@@ -29,9 +27,17 @@ class Blog
      * @param string $id
      * @return \GibbonCms\Blog\Post
      */
-    public function getPost($id)
+    public function find($id)
     {
         return $this->repository->find($id);
+    }
+
+    /**
+     * @return \GibbonCms\Blog\Post[]
+     */
+    public function getAll()
+    {
+        return $this->repository->getAll();
     }
 
     /**
@@ -39,6 +45,6 @@ class Blog
      */
     public function build()
     {
-        $this->repository->buildCache();
+        $this->repository->build();
     }
 }

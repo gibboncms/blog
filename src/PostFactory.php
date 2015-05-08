@@ -1,28 +1,11 @@
-<?php
+<?php namespace GibbonCms\Blog;
 
-namespace GibbonCms\Blog;
+use GibbonCms\Gibbon\Factories\Factory;
+use GibbonCms\Gibbon\Support\FactoryHelpers;
 
-use GibbonCms\Blog\MarkdownConverter;
-use GibbonCms\Gibbon\Factory;
-use Symfony\Component\Yaml\Parser as Yaml;
-
-class PostFactory extends Factory
+class PostFactory implements Factory
 {
-    /**
-     * @var \Symfony\Component\Yaml\Parser
-     */
-    protected $yaml;
-
-    /**
-     * @var \GibbonCms\Blog\MarkdownConverter
-     */
-    protected $markdownConverter;
-
-    public function __construct()
-    {
-        $this->yaml = new Yaml;
-        $this->markdownConverter = new MarkdownConverter;
-    }
+    use FactoryHelpers;
 
     /**
      * Transform raw data to an entity
@@ -32,21 +15,15 @@ class PostFactory extends Factory
      */
     public function make($data)
     {
-        list($rawMeta, $body) = explode(
-            $this->getDataSeparator(),
-            str_replace("\n\r", "\n", $data['data']),
-            2
-        );
+        $parts = $this->splitData($data['data'], ['meta', 'body']);
 
-        $meta = $this->yaml->parse($rawMeta);
+        $meta = self::parseYaml($parts['meta']);
 
         return $this->createAndFill([
             'id'                => $data['id'],
-            'slug'              => $data['slug'],
             'title'             => $meta['title'],
             'author'            => $meta['author'],
-            'body'              => $body,
-            'markdownConverter' => $this->markdownConverter,
+            'body'              => $parts['body'],
         ]);
     }
 
@@ -58,16 +35,14 @@ class PostFactory extends Factory
      */
     public function encode($entity)
     {
-        $contents = '';
-
-        $contents .= $this->dumpToYaml([
-            'title' => $entity->getTitle(),
-            'author' => $entity->getAuthor(),
-        ]);
-        
-        $contents .= $this->getDataSeparator();
-
-        $contents .= $entity->getBody();
+        $contents = ''
+            . $this->dumpToSimpleYaml([
+                'title' => $entity->title,
+                'author' => $entity->author,
+            ])
+            . $this->getDataSeparator()
+            . $entity->body
+        ;
 
         return $contents;
     }
@@ -80,35 +55,5 @@ class PostFactory extends Factory
     public static function makes()
     {
         return Post::class;
-    }
-
-    /**
-     * Transform an associative array to yaml.
-     * Not using symfony's yaml dumper for full control over the format.
-     * 
-     * @param array $array
-     * @return string
-     */
-    protected function dumpToYaml($array)
-    {
-        $parts = [];
-
-        foreach ($array as $key => $value) {
-            $parts[] = "$key: $value";
-        }
-
-        $yaml = implode("\n", $parts);
-
-        return $yaml;
-    }
-
-    /**
-     * The data seperator string in raw entities
-     * 
-     * @return string
-     */
-    protected function getDataSeparator()
-    {
-        return "\n\n---\n\n";
     }
 }

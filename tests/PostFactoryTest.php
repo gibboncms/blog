@@ -1,10 +1,7 @@
-<?php
-
-namespace GibbonCms\Blog\Tests;
+<?php namespace GibbonCms\Blog\Tests;
 
 use GibbonCms\Blog\Post;
 use GibbonCms\Blog\PostFactory;
-use Reflection;
 
 class PostFactoryTest extends TestCase
 {
@@ -22,33 +19,28 @@ class PostFactoryTest extends TestCase
     /** @test */
     function it_makes_an_entity()
     {
-        $data = [
-            'id' => 1,
-            'slug' => 'test-post',
-            'data' => file_get_contents($this->fixtures . '/posts/1-my-first-post.md'),
-        ];
-        $post = $this->factory->make($data);
+        $post = $this->factory->make([
+            'id' => 'test-post',
+            'data' => file_get_contents($this->fixtures . '/posts/my-first-post.md'),
+        ]);
 
         $this->assertInstanceOf(Post::class, $post);
-        $this->assertEquals(1, $post->getId());
-        $this->assertEquals('test-post', $post->getSlug());
-        $this->assertEquals('My First Post', $post->getTitle());
-        $this->assertEquals('Sebastian De Deyne', $post->getAuthor());
-        $this->assertRegexp('/## Hello world/', $post->getBody());
-        $this->assertRegexp('/<h2>Hello world<\/h2>/', $post->getHtmlBody());
+        $this->assertEquals('test-post', $post->id);
+        $this->assertEquals('My First Post', $post->title);
+        $this->assertEquals('Sebastian De Deyne', $post->author);
+        $this->assertRegexp('/## Hello world/', $post->body);
+        $this->assertRegexp('/<h2>Hello world<\/h2>/', $post->getRenderedBody());
     }
 
     /** @test */
     function it_encodes_an_entity()
     {
-        $data = [
-            'id' => 1,
-            'slug' => 'test-post',
-            'data' => file_get_contents($this->fixtures . '/posts/1-my-first-post.md'),
-        ];
-        $post = $this->factory->make($data);
+        $post = $this->factory->make([
+            'id' => 'test-post',
+            'data' => file_get_contents($this->fixtures . '/posts/my-first-post.md'),
+        ]);
 
         $raw = $this->factory->encode($post);
-        $this->assertEquals(file_get_contents($this->fixtures . '/posts/1-my-first-post.md'), $raw);
+        $this->assertEquals(file_get_contents($this->fixtures . '/posts/my-first-post.md'), $raw);
     }
 }
