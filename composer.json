@@ -22,7 +22,7 @@
         }
     },
     "require": {
-        "gibboncms/gibbon": "dev-master",
+        "gibboncms/gibbon": "~0.1",
         "symfony/yaml": "~2.6",
         "league/commonmark": "0.8.*"
     }
