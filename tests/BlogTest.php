@@ -8,7 +8,7 @@ class BlogTest extends TestCase
     function setUp()
     {
         $this->blog = new Blog($this->fixtures . '/posts');
-        $this->blog->build();
+        $this->blog->setUp();
     }
 
     /** @test */
