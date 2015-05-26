@@ -4,12 +4,18 @@ namespace GibbonCms\Blog\Test;
 
 use GibbonCms\Blog\Blog;
 use GibbonCms\Blog\Post;
+use GibbonCms\Gibbon\Filesystems\PlainFilesystem;
+use GibbonCms\Gibbon\Filesystems\FileCache;
 
 class BlogTest extends TestCase
 {
     function setUp()
     {
-        $this->blog = new Blog($this->fixtures . '/posts');
+        $this->blog = new Blog(
+            new PlainFilesystem($this->fixtures.'/posts'),
+            new FileCache($this->fixtures.'/posts/.cache')
+        );
+
         $this->blog->setUp();
     }
 

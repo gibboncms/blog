@@ -3,7 +3,7 @@
 namespace GibbonCms\Blog;
 
 use GibbonCms\Gibbon\Filesystems\FileCache;
-use GibbonCms\Gibbon\Filesystems\PlainFilesystem;
+use GibbonCms\Gibbon\Filesystems\Filesystem;
 use GibbonCms\Gibbon\Modules\Module;
 use GibbonCms\Gibbon\Repositories\FileRepository;
 
@@ -15,15 +15,12 @@ class Blog implements Module
     protected $repository;
 
     /**
-     * @param string $directory
+     * @param  \GibbonCms\Gibbon\Filesystems\Filesystem $filesystem
+     * @param  \GibbonCms\Gibbon\Filesystems\FileCache $fileCache
      */
-    public function __construct($directory)
+    public function __construct(Filesystem $filesystem, FileCache $fileCache)
     {
-        $this->repository = new FileRepository(
-            new PlainFilesystem($directory),
-            new FileCache($directory . '/.cache'),
-            new PostFactory
-        );
+        $this->repository = new FileRepository($filesystem, $fileCache, new PostFactory);
     }
 
     /**
