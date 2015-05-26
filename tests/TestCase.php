@@ -1,6 +1,6 @@
 <?php
 
-namespace GibbonCms\Blog\Tests;
+namespace GibbonCms\Blog\Test;
 
 use PHPUnit_Framework_TestCase;
 

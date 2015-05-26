@@ -1,4 +1,6 @@
-<?php namespace GibbonCms\Blog;
+<?php
+
+namespace GibbonCms\Blog;
 
 use GibbonCms\Gibbon\Factories\Factory;
 use GibbonCms\Gibbon\Support\FactoryHelpers;

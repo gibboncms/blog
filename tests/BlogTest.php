@@ -1,4 +1,6 @@
-<?php namespace GibbonCms\Blog\Tests;
+<?php
+
+namespace GibbonCms\Blog\Test;
 
 use GibbonCms\Blog\Blog;
 use GibbonCms\Blog\Post;
