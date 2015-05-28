@@ -1,5 +1,6 @@
 title: My First Post
-author: Sebastian De Deyne
+data:
+  author: Sebastian De Deyne
 
 ===
 

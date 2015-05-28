@@ -12,9 +12,14 @@ class Post extends Entity
     public $title;
 
     /**
-     * @var string
+     * @var \DateTime
      */
-    public $author;
+    public $date;
+
+    /**
+     * @var array
+     */
+    public $data;
 
     /**
      * @var string

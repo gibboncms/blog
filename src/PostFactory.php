@@ -22,10 +22,11 @@ class PostFactory implements Factory
         $meta = self::parseYaml($parts['meta']);
 
         return $this->createAndFill([
-            'id'                => $data['id'],
-            'title'             => $meta['title'],
-            'author'            => $meta['author'],
-            'body'              => $parts['body'],
+            'id'     => $data['id'],
+            'title'  => $meta['title'],
+            'date'   => $data['date'],
+            'data'   => isset($meta['data']) ? $meta['data'] : [],
+            'body'   => $parts['body'],
         ]);
     }
 
