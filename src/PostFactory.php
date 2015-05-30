@@ -31,26 +31,6 @@ class PostFactory implements Factory
     }
 
     /**
-     * Transform an entity to raw data
-     * 
-     * @param \GibbonCms\Blog\Post $entity
-     * @return string
-     */
-    public function encode($entity)
-    {
-        $contents = ''
-            . $this->dumpToSimpleYaml([
-                'title' => $entity->title,
-                'author' => $entity->author,
-            ])
-            . $this->getDataSeparator()
-            . $entity->body
-        ;
-
-        return $contents;
-    }
-
-    /**
      * Return the classname of the entity this factory makes
      * 
      * @return string

@@ -39,16 +39,4 @@ class PostFactoryTest extends TestCase
         $this->assertEquals('Sebastian De Deyne', $post->data['author']);
         $this->assertRegexp('/## Hello world/', $post->body);
     }
-
-    /** @tst */
-    function it_encodes_an_entity()
-    {
-        $post = $this->factory->make([
-            'id' => 'test-post',
-            'data' => file_get_contents($this->fixtures . '/posts/my-first-post.md'),
-        ]);
-
-        $raw = $this->factory->encode($post);
-        $this->assertEquals(file_get_contents($this->fixtures . '/posts/my-first-post.md'), $raw);
-    }
 }
