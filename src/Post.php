@@ -25,12 +25,4 @@ class Post extends Entity
      * @var string
      */
     public $body;
-
-    /**
-     * @return string
-     */
-    public function render()
-    {
-        return PostFactory::parseMarkdown($this->body);
-    }
 }
