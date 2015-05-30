@@ -12,7 +12,8 @@ class BlogTest extends TestCase
     function setUp()
     {
         $this->blog = new Blog(
-            new PlainFilesystem($this->fixtures.'/posts'),
+            new PlainFilesystem($this->fixtures),
+            'posts',
             new FileCache($this->fixtures.'/posts/.cache')
         );
 
