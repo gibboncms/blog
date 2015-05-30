@@ -9,7 +9,7 @@ use GibbonCms\Gibbon\Modules\Module;
 class Blog implements Module
 {
     /**
-     * @var \GibbonCms\Gibbon\Repository
+     * @var \GibbonCms\Gibbon\Repositories\Repository
      */
     protected $repository;
 
